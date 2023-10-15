@@ -1,6 +1,12 @@
-import { app, BrowserWindow } from "electron";
-import * as path from "path";
+import {app, BrowserWindow} from 'electron';
+import * as path from 'path';
+import {extractDeviceInstances, readBluestackConfigFile} from './model/bluestack_config_reader';
+import {getAdbConnectedDevices} from './commands/adb_handler';
 
+const electron = require('electron');
+const ipcMain       = require('electron').ipcMain
+
+const devicesInfo: DeviceInstance[] = [];
 function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -42,3 +48,26 @@ app.on("window-all-closed", () => {
 
 // In this file you can include the rest of your app"s specific main process
 // code. You can also put them in separate files and require them here.
+
+async function refreshDevicesConfig() {
+  const configFilePath = './bluestacks.conf';
+  const config = readBluestackConfigFile(configFilePath);
+  return extractDeviceInstances(config);
+}
+
+ipcMain.handle('deviceApi:refresh', async () => {
+  const deviceInstances = refreshDevicesConfig();
+
+  const result = await deviceInstances
+  const adbDevices = await getAdbConnectedDevices();
+
+  return adbDevices
+})
+
+ipcMain.handle('deviceApi:start', () => {
+
+})
+
+ipcMain.handle('deviceApi:stop', () => {
+
+})
