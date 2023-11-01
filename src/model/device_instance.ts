@@ -1,4 +1,7 @@
 interface DeviceInstance {
+
+  [key: string]: string;
+
   abi_list: string;
   adb_port: string;
   ads_display_time: string;
@@ -53,6 +56,7 @@ interface DeviceInstance {
   pin_to_top: string;
   ram: string;
   show_sidebar: string;
+  // @ts-ignore
   status: {
     adb_port: string;
     ip_addr_prefix_len: string;
@@ -61,4 +65,5 @@ interface DeviceInstance {
     session_id: string;
   };
   vulkan_supported: string;
+  instance_name: string;
 }

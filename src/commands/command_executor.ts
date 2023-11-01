@@ -31,7 +31,7 @@ export function runCommand(command: string): Promise<CommandResult> {
         }
       }
       if(debugCommands){
-        console.log(`run command result: ${JSON.stringify(resultObject)}`)
+        console.log(`run command ${command} result: ${JSON.stringify(resultObject)}`)
       }
       resolve(resultObject);
     });
